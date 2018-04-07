@@ -1,0 +1,93 @@
+<html>
+  <head>
+    <title>Blisscom</title>
+	<style>
+		.button {
+		    background-color: black; /* Green */
+		    border: none;
+		    color: white;
+		    padding: 15px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 26px;
+			background-image: "/intercom.png" 3px 5px no-repeat;
+			hover-color: black;
+		}
+
+
+		.fade
+		{
+		        opacity:.5;
+		}
+		.fade:hover
+		{
+		        opacity:1;
+				background-color: #black;
+		}
+
+
+		#footer{
+		   position: fixed;
+		   bottom: 0px;
+		   display: block;
+		   right:0px;
+		   left:0px;
+
+		   
+		}
+
+		
+		
+		</style>
+  </head>
+  <body style="background:black">
+	  
+	 <input type="text" value="This is the Enigmacom" id="intercom" style="font-family:courier;height:70px;width:800;font-size:26pt">
+
+	<p>
+
+
+    <div id="content"></div>
+    
+
+		
+		    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		    <!-- Include all compiled plugins (below), or include individual files as needed -->
+		    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		    <div id="rooms" class="button" input type="button">
+		    
+		    </div>
+  <script>
+  	$.getJSON("http://10.0.0.148:5005/zones",
+  	function (data) {
+  	    for (var i = 0; i < data.length; i++) { 
+  			btn=document.createElement("input");
+  			btn.type = "button"
+  			btn.value = data[i]['members'][0]['roomName']
+  			btn.name = data[i]['members'][0]['roomName']
+  			btn.className = "fade button"
+			btn.id=data[i]['members'][0]['roomName']
+			//btn.textb=data[i]['members'][0]['roomName']
+  			$("#rooms").append(btn)
+			//$("#rooms").append(" " + data[i]['members'][0]['roomName']+ " ")
+  	    }
+  	});
+	$('#rooms').on('click', 'input', function(e) {
+		url = $.get("http://10.0.0.148:5005/"+this.value+"/say/"+$('#intercom').val());
+		})
+	
+	</script>
+
+		<script>
+			$('#intercom').keydown(function (e){
+			    if(e.keyCode == 13){
+			      
+			    }
+			})
+		</script>
+	
+	
+		
+  </body>
+</html>
